@@ -2,7 +2,7 @@ import re
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode
 
-from utils.gettorrentsjson import returnResult
+from bot import torr_search
 
 
 def button(bot, update):
