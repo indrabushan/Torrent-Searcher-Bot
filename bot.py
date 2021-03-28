@@ -48,26 +48,21 @@ def torr_serch(update: Update, context: CallbackContext) -> None:
         update.message.reply_text("Searching results for {}".format(update.message.text.split(' ',1)[1]))
         url = "https://api.sumanjay.cf/torrent/?query={}".format(update.message.text.split(' ',1)[1])
         results = requests.get(url).json()
+        json = returnResult(torr_serch)
         print(results)
         for item in results:
-            age = item.get('age')
-            leech = item.get('leecher')
-            mag = item.get('magnet')
-            name = item.get('name')
-            seed = item.get('seeder')
-            size = item.get('size')
-            typ= item.get('type')
-            update.message.reply_text(f"""*Name:* {name}
-_Uploaded {age} ago_
-*Seeders:* `{seed}`
-*Leechers:* `{leech}`
-*Size:* `{size}`
-*Type:* {typ}
-*Magnet Link:* `{mag}`""", parse_mode=ParseMode.MARKDOWN)
-        update.message.reply_text("End of the search results...")
-    except:
-        update.message.reply_text("""Search results completed...
-If you've not seen any results, try researching...!""")
+            keyboard.append([
+            InlineKeyboardButton(json[item]['title'],
+                                 callback_data=item)
+        ])
+
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    message = sendMessage("<b>🔍Search Query Results:👇</b>\n"
+                                       "<pre>Search Query : </pre>" + "<i>" + torr_serch + "</i>\n",
+                              parse_mode='HTML',
+                              reply_markup=reply_markup,
+                              reply_to_message_id=update.message.message_id,
+                              disable_web_page_preview=True)
 
 #CommandHnadler for message "info"
 def info(update: Update, context: CallbackContext) -> None:
