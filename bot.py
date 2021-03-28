@@ -11,7 +11,7 @@
 import requests
 import logging
 import config
-from telegram import *
+from telegram import *, InlineKeyboardMarkup
 from telegram.ext import *
 
 #enable logger (optional)
